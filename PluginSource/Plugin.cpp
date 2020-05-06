@@ -5,13 +5,13 @@
 #define EXPORT_API // XCode does not need annotating exported functions, so define is empty
 #endif
 
-#include <iostream>
 #include <Windows.h>
 #include <SetupAPI.h>
 #include <devguid.h>
 #include <vector>
 
 std::vector<SP_DRVINFO_DATA> drivers;
+//SYSTEMTIME systemtime;
 
 // Link following functions C-style (required for plugins)
 extern "C"
@@ -49,7 +49,7 @@ EXPORT_API void SetupGPUDriverInfo()
     return;
 }
 
-EXPORT_API size_t GetDriverCount()
+EXPORT_API uint64_t GetDriverCount()
 {
     return drivers.size();
 }
@@ -62,6 +62,13 @@ EXPORT_API wchar_t* GetDriverName(uint32_t i)
 EXPORT_API uint64_t GetDriverVesion(uint32_t i)
 {
     return drivers[i].DriverVersion;
+}
+
+EXPORT_API SYSTEMTIME GetDriverDate(uint32_t i)
+{
+    SYSTEMTIME st;
+    FileTimeToSystemTime(&drivers[i].DriverDate, &st);
+    return st;
 }
 
 } // end of export C block
