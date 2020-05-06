@@ -11,7 +11,6 @@
 #include <vector>
 
 std::vector<SP_DRVINFO_DATA> drivers;
-//SYSTEMTIME systemtime;
 
 // Link following functions C-style (required for plugins)
 extern "C"
@@ -20,7 +19,6 @@ EXPORT_API void SetupGPUDriverInfo()
 {
     drivers.clear();
 
-    uint32_t dxDriverVersion[4] = { 0,0,0,0 };
     HDEVINFO devInfoSet = SetupDiGetClassDevs(&GUID_DEVCLASS_DISPLAY, NULL, NULL, DIGCF_PRESENT);
 
     for (int i = 0; ; i++)
